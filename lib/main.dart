@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'models/todo_unit.dart';
+import 'repositories/storage_methods.dart';
 import 'screens/home_screen.dart';
 import 'services/todo_provider.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    name: 'todo list app',
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const TodoListApp());
 }
 
@@ -16,6 +26,10 @@ class TodoListApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: TodoProvider()),
+        StreamProvider.value(
+          value: StorageMethods().fetchTodos(),
+          initialData: const <TodoUnit>[],
+        ),
       ],
       child: MaterialApp(
         title: 'Todo list',

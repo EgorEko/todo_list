@@ -1,11 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class TodoUnit {
   TodoUnit({
+    required this.id,
     required this.title,
     required this.isCompleted,
   });
 
+  final String id;
   final String title;
   bool isCompleted;
 
@@ -14,16 +14,13 @@ class TodoUnit {
   }
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'title': title,
-        'completed': isCompleted,
+        'isCompleted': isCompleted,
       };
 
-  static TodoUnit fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
-
-    return TodoUnit(
-      title: snapshot['title'],
-      isCompleted: snapshot['completed'],
-    );
-  }
+  TodoUnit.fromFirestore(Map<String, dynamic> firestoreMap)
+      : id = firestoreMap['id'],
+        title = firestoreMap['title'],
+        isCompleted = firestoreMap['isCompleted'];
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/todo_unit.dart';
 import '../services/todo_provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,33 +32,33 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final todoProvider = Provider.of<TodoProvider>(context);
+    final todos = Provider.of<List<TodoUnit>>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('TODO list'),
         actions: [
           TextButton(
             onPressed: () => _showAddTextDialog(),
-            child: const Text('Add todo'),
+            child: const Text('Add task'),
           ),
         ],
       ),
       body: ListView.builder(
-        itemCount: todoProvider.allTodos.length,
+        itemCount: todos.length,
         itemBuilder: (context, index) {
           return ListTile(
             title: InkWell(
-              onTap: () =>
-                  todoProvider.toggleTodo(todoProvider.allTodos[index]),
+              onTap: () => todoProvider.toggleTodo(todos[index]),
               child: Text(
-                todoProvider.allTodos[index].title,
-                style: todoProvider.allTodos[index].isCompleted
+                todos[index].title,
+                style: todos[index].isCompleted
                     ? const TextStyle(decoration: TextDecoration.lineThrough)
                     : null,
               ),
             ),
             trailing: IconButton(
               onPressed: () {
-                todoProvider.deleteTodo(todoProvider.allTodos[index]);
+                todoProvider.deleteTodo(todos[index]);
               },
               icon: const Icon(Icons.delete),
             ),
