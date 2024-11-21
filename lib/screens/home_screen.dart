@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final todoProvider = Provider.of<TodoProvider>(context);
-    final todos = Provider.of<List<TodoUnit>>(context);
+    final tasks = Provider.of<List<TodoUnit>>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('TODO list'),
@@ -43,28 +43,40 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: todos.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: InkWell(
-              onTap: () => todoProvider.toggleTodo(todos[index]),
-              child: Text(
-                todos[index].title,
-                style: todos[index].isCompleted
-                    ? const TextStyle(decoration: TextDecoration.lineThrough)
-                    : null,
-              ),
-            ),
-            trailing: IconButton(
-              onPressed: () {
-                todoProvider.deleteTodo(todos[index]);
+      body: tasks.isEmpty
+          ? const Center(
+              child: Text('No tasks found'),
+            )
+          : ListView.builder(
+              itemCount: tasks.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: InkWell(
+                    onTap: () => todoProvider.toggleTodo(tasks[index]),
+                    child: Text(
+                      tasks[index].title,
+                      style: tasks[index].isCompleted
+                          ? const TextStyle(
+                              decoration: TextDecoration.lineThrough,
+                            )
+                          : null,
+                    ),
+                  ),
+                  trailing: IconButton(
+                    onPressed: () {
+                      print(tasks[index].id);
+                      todoProvider.deleteTodo(tasks[index]);
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                      color: tasks[index].isCompleted
+                          ? Colors.redAccent
+                          : Colors.black,
+                    ),
+                  ),
+                );
               },
-              icon: const Icon(Icons.delete),
             ),
-          );
-        },
-      ),
     );
   }
 

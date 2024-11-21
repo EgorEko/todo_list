@@ -9,11 +9,12 @@ class TodoUnit {
   final String title;
   bool isCompleted;
 
-  void toggleCompleted() {
-    isCompleted = !isCompleted;
-  }
-
-  Map<String, dynamic> toJson() => {
+  static Map<String, dynamic> toJson(
+    String id,
+    String title,
+    bool isCompleted,
+  ) =>
+      {
         'id': id,
         'title': title,
         'isCompleted': isCompleted,
