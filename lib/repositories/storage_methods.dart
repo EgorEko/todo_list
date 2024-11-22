@@ -2,16 +2,16 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/todo_unit.dart';
+import '../models/todo_item.dart';
 
 class StorageMethods {
-  Stream<List<TodoUnit>> fetchTodos() {
+  Stream<List<TodoItem>> fetchTodos() {
     CollectionReference tasks = FirebaseFirestore.instance.collection('Tasks');
 
     return tasks.snapshots().map(
           (snapshot) => snapshot.docs
               .map(
-                (document) => TodoUnit.fromFirestore(
+                (document) => TodoItem.fromFirestore(
                   document.data() as Map<String, dynamic>,
                 ),
               )
@@ -23,7 +23,7 @@ class StorageMethods {
     try {
       CollectionReference tasks =
           FirebaseFirestore.instance.collection('Tasks');
-      await tasks.doc(id).set(TodoUnit.toJson(id, title, isCompleted));
+      await tasks.doc(id).set(TodoItem.toJson(id, title, isCompleted));
     } catch (e) {
       log(e.toString());
     }
@@ -33,7 +33,7 @@ class StorageMethods {
     try {
       CollectionReference tasks =
           FirebaseFirestore.instance.collection('Tasks');
-      await tasks.doc(id).update(TodoUnit.toJson(id, title, isCompleted));
+      await tasks.doc(id).update(TodoItem.toJson(id, title, isCompleted));
     } catch (e) {
       log(e.toString());
     }

@@ -1,5 +1,5 @@
-class TodoUnit {
-  TodoUnit({
+class TodoItem {
+  TodoItem({
     required this.id,
     required this.title,
     required this.isCompleted,
@@ -20,7 +20,7 @@ class TodoUnit {
         'isCompleted': isCompleted,
       };
 
-  TodoUnit.fromFirestore(Map<String, dynamic> firestoreMap)
+  TodoItem.fromFirestore(Map<String, dynamic> firestoreMap)
       : id = firestoreMap['id'],
         title = firestoreMap['title'],
         isCompleted = firestoreMap['isCompleted'];

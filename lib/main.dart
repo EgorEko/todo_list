@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'models/todo_unit.dart';
+import 'models/todo_item.dart';
 import 'repositories/storage_methods.dart';
 import 'screens/home_screen.dart';
 import 'services/todo_provider.dart';
@@ -28,7 +28,7 @@ class TodoListApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: TodoProvider()),
         StreamProvider.value(
           value: StorageMethods().fetchTodos(),
-          initialData: const <TodoUnit>[],
+          initialData: const <TodoItem>[],
         ),
       ],
       child: MaterialApp(

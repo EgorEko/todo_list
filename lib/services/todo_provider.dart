@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
-import '../models/todo_unit.dart';
+import '../models/todo_item.dart';
 import '../repositories/storage_methods.dart';
 
 class TodoProvider with ChangeNotifier {
@@ -14,12 +14,12 @@ class TodoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleTodo(TodoUnit todo) async {
+  Future<void> toggleTodo(TodoItem todo) async {
     await _methods.updateTodo(todo.id, !todo.isCompleted, todo.title);
     notifyListeners();
   }
 
-  Future<void> deleteTodo(TodoUnit todo) async {
+  Future<void> deleteTodo(TodoItem todo) async {
     await _methods.removeTodo(todo.id);
     notifyListeners();
   }

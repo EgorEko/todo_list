@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/todo_unit.dart';
+import '../models/todo_item.dart';
 import '../services/todo_provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final todoProvider = Provider.of<TodoProvider>(context);
-    final tasks = Provider.of<List<TodoUnit>>(context);
+    final tasks = Provider.of<List<TodoItem>>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('TODO list'),
